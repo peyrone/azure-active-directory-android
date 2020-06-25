@@ -42,7 +42,7 @@
              "settingFile": "/app/src/main/AndroidManifest.xml",
              "replaceTokens": {
                 "packageNameManifest": "android:host=\"cleancode.sample.azureadandroid\"",
-                "keyHash": "lvGC0B4SWYU8tNPHg/bdMjQinZQ="
+                "keyHash": "xxxxx"
               }
            },
            {
