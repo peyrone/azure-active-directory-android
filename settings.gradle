@@ -1,0 +1,3 @@
+rootProject.name='Azure AD Android'
+include ':app'
+include ':Authentication'

@@ -1,0 +1,63 @@
+{
+  "Sample": {
+    "Title": "Calling Microsoft Graph from an Android app",
+    "Level": 200,
+    "Client": "Android"
+  },
+  "AppRegistrations": [
+    {
+      "x-ms-id": "active-directory-android-java",
+      "x-ms-name": "android-java",
+      "x-ms-version": "1.0",
+      "replyUrlsWithType": [
+        {
+          "url": "msauth://{Enter_the_Package_Name}/{Enter_the_Signature_Hash}",
+          "type": "InstalledClient"
+        }
+      ],
+      "requiredResourceAccess": [
+        {
+          "x-ms-resourceAppName": "Microsoft Graph",
+          "resourceAppId": "00000003-0000-0000-c000-000000000000",
+          "resourceAccess": [
+            {
+              "id": "Enter_the_Application_Id_here",
+              "type": "Scope",
+              "x-ms-name": "user.read"
+            }
+          ]
+        }
+      ],
+      "codeConfigurations": [
+          {
+            "settingFile": "/app/src/main/res/raw/auth_config_single_account.json",
+            "replaceTokens": {
+                "appId": "xxxxx",
+                "authorityEndpointHost": "https://login.microsoftonline.com/",
+                "tenantId": "xxxxx",
+                "redirectUri": "msauth://cleancode.sample.azureadandroid/xxxx"
+             }
+           },
+           {
+             "settingFile": "/app/src/main/AndroidManifest.xml",
+             "replaceTokens": {
+                "packageNameManifest": "android:host=\"cleancode.sample.azureadandroid\"",
+                "keyHash": "lvGC0B4SWYU8tNPHg/bdMjQinZQ="
+              }
+           },
+           {
+            "settingFile": "/app/build.gradle",
+            "replaceTokens": {
+               "packageNameGradle": "cleancode.sample.azureadandroid"
+             }
+           },
+           {
+            "settingFile": "/app/src/main/java/cleancode.sample.azureadandroid/utils/MSGraphRequestWrapper.java",
+            "replaceTokens": {
+                "msgraphEndpointHost": "https://graph.microsoft.com/"
+             }
+           }
+       ]	
+     }
+  ]
+}
