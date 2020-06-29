@@ -32,17 +32,17 @@
           {
             "settingFile": "/app/src/main/res/raw/auth_config_single_account.json",
             "replaceTokens": {
-                "appId": "xxxxx",
+                "appId": "fe918647-7c1c-4634-b4bd-13eb1023e5cc",
                 "authorityEndpointHost": "https://login.microsoftonline.com/",
-                "tenantId": "xxxxx",
-                "redirectUri": "msauth://cleancode.sample.azureadandroid/xxxx"
+                "tenantId": "5e11994c-d903-4369-b14f-057d8e7498bf",
+                "redirectUri": "msauth://cleancode.sample.azureadandroid/lvGC0B4SWYU8tNPHg%2FbdMjQinZQ%3D"
              }
            },
            {
              "settingFile": "/app/src/main/AndroidManifest.xml",
              "replaceTokens": {
                 "packageNameManifest": "android:host=\"cleancode.sample.azureadandroid\"",
-                "keyHash": "xxxxx"
+                "keyHash": "lvGC0B4SWYU8tNPHg/bdMjQinZQ="
               }
            },
            {

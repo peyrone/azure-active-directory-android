@@ -1,9 +1,6 @@
 package cleancode.sample.authentication.activity
 
-import android.app.Activity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -37,12 +34,6 @@ class AuthenticationActivity : BaseActivity() {
     /* Azure AD Variables */
     private var mSingleAccountApp: ISingleAccountPublicClientApplication? = null
     private var mAccount: IAccount? = null
-
-    private val handler: Handler = Handler()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_authentication
@@ -92,16 +83,15 @@ class AuthenticationActivity : BaseActivity() {
     private val clickListener = View.OnClickListener { view ->
         when (view.id) {
             R.id.btn_signIn -> {
-                if (mSingleAccountApp == null)
-                    return@OnClickListener
-
-                mSingleAccountApp!!.signIn(this, "", getScopes(), getAuthInteractiveCallback())
+                if (mSingleAccountApp != null) {
+                    mSingleAccountApp?.signIn(this, "", getScopes(), getAuthInteractiveCallback())
+                }
             }
             R.id.btn_removeAccount -> {
-                if (mSingleAccountApp == null)
-                    return@OnClickListener
+                if (mSingleAccountApp != null) {
 
-                    mSingleAccountApp!!.signOut(object: ISingleAccountPublicClientApplication.SignOutCallback {
+                    mSingleAccountApp?.signOut(object :
+                        ISingleAccountPublicClientApplication.SignOutCallback {
                         override fun onSignOut() {
                             mAccount = null
                             updateUI()
@@ -112,26 +102,27 @@ class AuthenticationActivity : BaseActivity() {
                             displayError(exception)
                         }
                     })
+                }
             }
             R.id.btn_callGraphInteractively -> {
-                if (mSingleAccountApp == null)
-                    return@OnClickListener
-                /**
-                 * If acquireTokenSilent() returns an error that requires an interaction (MsalUiRequiredException),
-                 * invoke acquireToken() to have the user resolve the interrupt interactively.
-                 *
-                 * Some example scenarios are
-                 *  - password change
-                 *  - the resource you're acquiring a token for has a stricter set of requirement than your Single Sign-On refresh token.
-                 *  - you're introducing a new scope which the user has never consented for.
-                 */
-                Log.d(TAG, getScopes().joinToString { "," })
-                mSingleAccountApp!!.acquireToken(Activity(), getScopes(), getAuthInteractiveCallback())
+                if (mSingleAccountApp != null) {
+                    /**
+                     * If acquireTokenSilent() returns an error that requires an interaction (MsalUiRequiredException),
+                     * invoke acquireToken() to have the user resolve the interrupt interactively.
+                     *
+                     * Some example scenarios are
+                     *  - password change
+                     *  - the resource you're acquiring a token for has a stricter set of requirement than your Single Sign-On refresh token.
+                     *  - you're introducing a new scope which the user has never consented for.
+                     */
+                    Log.d(TAG, getScopes().joinToString { "," })
+                    mSingleAccountApp?.acquireToken(this, getScopes(), getAuthInteractiveCallback())
+                }
             }
             R.id.btn_callGraphSilently -> {
-                if (mSingleAccountApp == null)
-                    return@OnClickListener
-                mSingleAccountApp!!.acquireTokenSilentAsync(getScopes(), mAccount!!.authority, getAuthSilentCallback())
+                if (mSingleAccountApp == null) {
+                    mSingleAccountApp?.acquireTokenSilentAsync(getScopes(), mAccount!!.authority, getAuthSilentCallback())
+                }
             }
         }
     }
@@ -157,7 +148,7 @@ class AuthenticationActivity : BaseActivity() {
         {
             return
         }
-        mSingleAccountApp!!.getCurrentAccountAsync(object: ISingleAccountPublicClientApplication.CurrentAccountCallback {
+        mSingleAccountApp?.getCurrentAccountAsync(object: ISingleAccountPublicClientApplication.CurrentAccountCallback {
             override fun onAccountLoaded(activeAccount: IAccount?) {
                 mAccount = activeAccount
                 updateUI()
@@ -181,14 +172,14 @@ class AuthenticationActivity : BaseActivity() {
      */
     private fun getAuthSilentCallback(): SilentAuthenticationCallback {
         return object: SilentAuthenticationCallback {
-            override fun onSuccess(authenticationResult: IAuthenticationResult?) {
+            override fun onSuccess(authenticationResult: IAuthenticationResult) {
                 Log.d(TAG, "Successfully authenticated")
-                callGraphAPI(authenticationResult!!)
+                callGraphAPI(authenticationResult)
             }
 
-            override fun onError(exception: MsalException?) {
-                Log.d(TAG, "Authentication failed: " + exception.toString())
-                displayError(exception!!)
+            override fun onError(exception: MsalException) {
+                Log.d(TAG, "Authentication failed: $exception")
+                displayError(exception)
 
                 if (exception is MsalClientException)
                 {

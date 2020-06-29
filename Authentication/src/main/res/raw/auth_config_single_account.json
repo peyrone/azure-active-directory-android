@@ -1,13 +1,13 @@
 {
   "client_id" : "xxxxx",
   "authorization_user_agent" : "DEFAULT",
-  "redirect_uri" : "msauth://cleancode.sample.azureadandroid/xxxxx",
+  "redirect_uri" : "msauth://xxxxx",
   "account_mode" : "SINGLE",
   "broker_redirect_uri_registered": false,
   "authorities" : [
     {
       "type": "AAD",
-      "authority_url": "https://login.microsoftonline.com/xxxxx"
+      "authority_url": "https://xxxxx"
     }
   ]
 }

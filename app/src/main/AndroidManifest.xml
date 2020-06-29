@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="cleancode.sample.azureadandroid"
+                    android:host="xxxxx"
                     android:path="/xxxxx"
                     android:scheme="msauth" />
             </intent-filter>
